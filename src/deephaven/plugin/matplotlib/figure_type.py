@@ -25,6 +25,11 @@ class FigureType(ObjectType):
 
         print("to_bytes!!!")
 
+        LivenessScope = jpy.get_type('io.deephaven.engine.liveness.LivenessScope')
+        LivenessScopeStack = jpy.get_type('io.deephaven.engine.liveness.LivenessScopeStack')
+        liveness_scope = LivenessScope(True)
+        LivenessScopeStack.push(liveness_scope)
+
         table = jpy.get_type('io.deephaven.engine.table.impl.util.KeyedArrayBackedMutableTable').make(emptyTable(0).updateView('MsgId=""', 'Msg=""'), 'MsgId')
 
         def listener_function(update):
@@ -48,6 +53,8 @@ class FigureType(ObjectType):
 
         listen(table, listener_function)
         exporter.reference(table)
+        exporter.reference(liveness_scope)
+        LivenessScopeStack.pop(liveness_scope)
         buf = BytesIO()
         figure.savefig(buf, format='PNG', dpi=144)
         return buf.getvalue()
