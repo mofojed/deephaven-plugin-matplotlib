@@ -2,7 +2,7 @@ from deephaven.plugin import Registration
 from importlib import resources
 import matplotlib.pyplot as plt
 
-__version__ = "0.0.1.dev6"
+__version__ = "0.0.1.dev7"
 
 def init_theme():
     # Set the Deephaven style globally.
