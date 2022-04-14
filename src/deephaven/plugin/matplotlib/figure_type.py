@@ -8,9 +8,6 @@ print("Hello from plugin!")
 
 class FigureType(ObjectType):
 
-    def __init__(self):
-        self.handle = None
-
     @property
     def name(self) -> str:
         return NAME
